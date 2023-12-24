@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "data-dashboard-streamlit"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+streamlit = "^1.29.0"
+pandas = "^2.1.4"
+google-cloud-bigquery = "^3.14.1"
+db-dtypes = "^1.2.0"
+plotly-express = "^0.4.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
