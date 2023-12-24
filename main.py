@@ -5,6 +5,7 @@ import utilities.prepare_data as prepare
 import utilities.graphs as graph_helper
 
 
+# ull in data from Big Query
 df = bq.run_query("""
                     SELECT 
                         EXTRACT(DATE FROM date_created) as date_created,
@@ -15,8 +16,11 @@ df = bq.run_query("""
                     GROUP BY EXTRACT(DATE FROM date_created), install_name
                   """)
 
+# Add features to the data set
 df = prepare.feature_engineer(df)
 
+
+# Render the page
 with st.sidebar: # Sidebar
     st.image("assets/Screenshot 2023-12-23 at 2.25.21 PM.png", width=150)
     install_name = st.selectbox("Install Name", 
@@ -28,7 +32,7 @@ with st.sidebar: # Sidebar
     selected_df = graph_helper.generate_data_selection(df, {"install_name": install_name, "year": year})
 
 with st.container(): # Main Content Area
-    
+
     st.title(f'Sales Dashboard for {install_name}')
 
     col1, col2 = st.columns(2)
@@ -62,9 +66,6 @@ with st.container(): # Main Content Area
 
     st.subheader(f"Raw Data for {install_name}")
     st.dataframe(df[df["install_name"] == install_name][["date_created", "install_name", "total_orders", "total_revenue"]].sort_values('date_created'), hide_index=True, use_container_width=True)
-
-    
-
 
 
 

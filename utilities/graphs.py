@@ -1,6 +1,5 @@
 import plotly.express as px
 import pandas as pd
-import streamlit as st
 
 def generate_data_selection(data:pd.DataFrame, settings:dict) -> pd.DataFrame:
     if len(settings["year"]) == 0:
