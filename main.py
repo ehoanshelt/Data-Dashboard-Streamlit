@@ -35,7 +35,7 @@ with st.container(): # Main Content Area
 
     st.title(f'Sales Dashboard for {install_name}')
 
-    col1, col2 = st.columns(2)
+    col1, col2, col3 = st.columns(3)
 
     with col1:
         st.subheader("Average revenue per order")
@@ -43,26 +43,33 @@ with st.container(): # Main Content Area
     with col2:
         st.subheader("Average revenue per day")
         st.write(round(selected_df["total_revenue"].mean(), 2))
+    with col3:
+        st.subheader("Average orders per day")
+        st.write(round(selected_df["total_orders"].mean(), 0))
 
     st.divider()
 
-    st.subheader('How many orders per day?')
-    st.plotly_chart(graph_helper.generate_histplots(selected_df, "total_orders"), use_container_width=True)
+    st.subheader('Revenue over time ')
+    st.plotly_chart(graph_helper.generate_lineplot(selected_df, "date_created", "total_revenue"), use_container_width=True)
 
+
+    st.subheader('How many orders per day?')
+    st.plotly_chart(graph_helper.generate_histplot(selected_df, "total_orders"), use_container_width=True)
 
     st.subheader('How much revenue per day?')
-    st.plotly_chart(graph_helper.generate_histplots(selected_df, "total_revenue"), use_container_width=True)
+    st.plotly_chart(graph_helper.generate_histplot(selected_df, "total_revenue"), use_container_width=True)
 
     st.subheader("Distribution of Sales")
 
     by_month, day_of_week, by_week = st.tabs(["By Month", "By Day of Week", "By Week"])
-    y = "total_orders"
+    y = "total_revenue"
+    
     with by_month:
-        st.plotly_chart(graph_helper.generate_boxplots(selected_df, "month", y), use_container_width=True)
+        st.plotly_chart(graph_helper.generate_boxplot(selected_df, "month", y), use_container_width=True)
     with day_of_week:
-        st.plotly_chart(graph_helper.generate_boxplots(selected_df, "day_of_week", y),use_container_width=True)
+        st.plotly_chart(graph_helper.generate_boxplot(selected_df, "day_of_week", y),use_container_width=True)
     with by_week:
-        st.plotly_chart(graph_helper.generate_boxplots(selected_df, "week_of_year", y), use_container_width=True)
+        st.plotly_chart(graph_helper.generate_boxplot(selected_df, "week_of_year", y), use_container_width=True)
 
     st.subheader(f"Raw Data for {install_name}")
     st.dataframe(df[df["install_name"] == install_name][["date_created", "install_name", "total_orders", "total_revenue"]].sort_values('date_created'), hide_index=True, use_container_width=True)

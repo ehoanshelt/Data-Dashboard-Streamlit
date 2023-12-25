@@ -7,10 +7,14 @@ def generate_data_selection(data:pd.DataFrame, settings:dict) -> pd.DataFrame:
     
     return data[(data["install_name"] == settings["install_name"]) & (data["year"].isin(settings["year"]))]
 
-def generate_boxplots(data:pd.DataFrame, xValue, yValue):
+def generate_boxplot(data:pd.DataFrame, xValue: str, yValue: str):
     fig = px.box(data, x=xValue, y=yValue)
     return fig
 
-def generate_histplots(data:pd.DataFrame, xValue, category="year"):
-    fig = px.histogram(data, x=xValue, color=category)
+def generate_histplot(data:pd.DataFrame, xValue: str, category: str ="year", sortby: str="year") -> px.histogram:
+    fig = px.histogram(data.sort_values(sortby), x=xValue, color=category, barmode="overlay", color_discrete_sequence=px.colors.sequential.Inferno)
+    return fig
+
+def generate_lineplot(data: pd.DataFrame, xValue: str, yValue: str, sortby: str="date_created") -> px.line:
+    fig = px.line(data.sort_values(sortby), x=xValue, y=yValue)
     return fig
