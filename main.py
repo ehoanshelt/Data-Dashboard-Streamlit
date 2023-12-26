@@ -1,4 +1,3 @@
-import pandas as pd
 import streamlit as st
 import utilities.prepare_data as prepare
 from utilities.graphs import GraphHelper
