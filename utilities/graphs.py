@@ -5,10 +5,13 @@ class GraphHelper:
     def __init__(self, data: pd.DataFrame):
         """A class that helps eliminate redundant code. 
         When ready, use the import_data method to capture the data"""
+
         self.data: pd.DataFrame = data
 
     def filter_data(self, settings:dict) -> pd.DataFrame:
-        """Pass the settings for the Year and Install Name as a dictionary to return a filtered DataFrame"""
+        """Pass the settings for the Year and Install Name as a dictionary to return a filtered DataFrame
+        This will return the filtered DataFrame and set the data in the object to the filtered state"""
+        
         if len(settings["year"]) == 0:
             self.data = self.data[self.data["install_name"] == settings["install_name"]]
             return self.data
